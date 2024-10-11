@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "mercadona-ticket-analyzer"
+version = "0.1.0"
+description = "Tool to extract info from Mercadona tickets"
+authors = ["Carlos Sánchez Páez <karlossanpa@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pypdf = "^5.0.0"
+fastapi = "^0.115.0"
+python-multipart = "^0.0.11"
+uvicorn = "^0.31.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
