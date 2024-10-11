@@ -1,8 +1,8 @@
 import re
 
 from src.domain.parsers.ticket import TicketParser
-from src.domain.ticket import Ticket
-from src.domain.ticket_item import TicketItem
+from src.domain.schemas.ticket import Ticket
+from src.domain.schemas.ticket_item import TicketItem
 
 
 class MercadonaTicketParser(TicketParser):

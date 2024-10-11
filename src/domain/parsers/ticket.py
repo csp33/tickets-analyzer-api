@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 
-from src.domain.ticket import Ticket
+from src.domain.schemas.ticket import Ticket
 
 
 class TicketParser(ABC):

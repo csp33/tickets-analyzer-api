@@ -1,6 +1,6 @@
 from src.domain.parsers.file import FileParser
 from src.domain.parsers.ticket import TicketParser
-from src.domain.ticket import Ticket
+from src.domain.schemas.ticket import Ticket
 
 
 class ParseTicketFileUseCase:
