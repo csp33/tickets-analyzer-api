@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 from src.domain.parsers.ticket import TicketParser
 from src.domain.schemas.ticket import Ticket
@@ -14,6 +15,7 @@ class MercadonaTicketParser(TicketParser):
     )
     __WEIGHTED_ITEM_DESCRIPTION_PATTERN = re.compile(r"^\s*(\d+)\s+(.+)$")
     __WEIGHTED_ITEM_FALLBACK_DESCRIPTION = "Unknown"
+    __TIMESTAMP_PATTERN = re.compile(r"(\d{2}/\d{2}/\d{4} \d{2}:\d{2})")
     __ITEMS_TO_IGNORE = ["PARKING"]
 
     def __parse_regular_item(self, match: re.Match[str]) -> TicketItem:
@@ -54,10 +56,16 @@ class MercadonaTicketParser(TicketParser):
         items = []
         lines = ticket_text.splitlines()
         last_description = None
+        ticket_timestamp = None
 
         for line in map(str.strip, lines):
             if any([ignored_item in line for ignored_item in self.__ITEMS_TO_IGNORE]):
                 continue
+
+            if timestamp_match := self.__TIMESTAMP_PATTERN.match(line):
+                datetime_str = timestamp_match.group(1)
+                ticket_timestamp = datetime.strptime(datetime_str, "%d/%m/%Y %H:%M")
+
             if regular_item_match := self.__REGULAR_ITEM_PATTERN.match(line):
                 items.append(self.__parse_regular_item(regular_item_match))
                 last_description = None
@@ -78,4 +86,4 @@ class MercadonaTicketParser(TicketParser):
                 )
                 last_description = None
 
-        return Ticket(items=items)
+        return Ticket(timestamp=ticket_timestamp, items=items)
