@@ -1,3 +1,5 @@
+from typing import Any
+
 from fastapi import APIRouter
 
 
@@ -5,5 +7,5 @@ router = APIRouter()
 
 
 @router.get("/")
-async def healthcheck() -> str:
-    return "OK"
+async def healthcheck() -> dict[str, Any]:
+    return {"status": "ok"}
